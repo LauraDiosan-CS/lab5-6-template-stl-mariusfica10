@@ -177,6 +177,9 @@ UI::~UI()
 {
 }
 
+//desc: handles the service func of showing ingredients average
+//  in: -
+// out: =-
 void UI::showRecipes() {
 	map<string, double> rez = this->service.showRecipe();
 	for (map<string, double>::iterator it = rez.begin(); it != rez.end(); ++it) {

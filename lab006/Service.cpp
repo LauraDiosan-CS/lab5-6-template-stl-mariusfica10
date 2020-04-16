@@ -69,6 +69,9 @@ int Service::getSize()
 	return this->repoSTL.getSize();
 }
 
+//desc: returns a map with ingredients and their average price in the objects
+//in  : -
+//out : the map with ingredients
 map<string, double> Service::showRecipe()
 {
 	map<string, double> rez;
@@ -79,22 +82,22 @@ map<string, double> Service::showRecipe()
 	{
 		char* token = NULL;
 		char* context = NULL;
-		token = strtok_s(prajituri[j].getRecipe(), " ", &context);
+		token = strtok_s(prajituri[j].getRecipe(), ",", &context);
 		
 		while (token)
 		{
 			map<string, double>::iterator i = rez.find(string(token));
 			if (i == rez.end())
 			{
-				rez[string(token)] = prajituri[j].getCode();
+				rez[string(token)] = prajituri[j].getPrice();
 				cnt[string(token)] = 1;
 			}
 			else
 			{
-				rez[string(token)] += prajituri[j].getCode();
+				rez[string(token)] += prajituri[j].getPrice();
 				cnt[string(token)] += 1;
 			}
-			token = strtok_s(NULL, " ", &context);
+			token = strtok_s(NULL, ",", &context);
 		}
 
 	}

@@ -1,5 +1,2 @@
-﻿  lab006.cpp
-  Service.cpp
-C:\Users\FIcaegay\source\repos\lab006\lab006\Service.cpp(78,20): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+﻿  Tests.cpp
   lab006.vcxproj -> C:\Users\FIcaegay\source\repos\lab006\Debug\lab006.exe

@@ -113,8 +113,8 @@ void testRepositoryFile()
 void testService() {
 	char* nume1 = new char[strlen("ciocolata") + 1];
 	strcpy_s(nume1, strlen("ciocolata") + 1, "ciocolata");
-	char* ingredinte1 = new char[strlen("multa ciocolata") + 1];
-	strcpy_s(ingredinte1, strlen("multa ciocolata") + 1, "multa ciocolata");
+	char* ingredinte1 = new char[strlen("multa,ciocolata") + 1];
+	strcpy_s(ingredinte1, strlen("multa,ciocolata") + 1, "multa,ciocolata");
 
 	char* nume2 = new char[strlen("Amandina") + 1];
 	strcpy_s(nume2, strlen("Amandina") + 1, "Amandina");
@@ -123,23 +123,37 @@ void testService() {
 
 	char* nume3 = new char[strlen("tort") + 1];
 	strcpy_s(nume3, strlen("tort") + 1, "tort");
-	char* ingredinte3 = new char[strlen("blat ciocolata") + 1];
-	strcpy_s(ingredinte3, strlen("blat ciocolata") + 1, "blat ciocolata");
+	char* ingredinte3 = new char[strlen("blat,ciocolata") + 1];
+	strcpy_s(ingredinte3, strlen("blat,ciocolata") + 1, "blat,ciocolata");
 
 	Service servicePrajituri;
 	servicePrajituri.add(3, nume1, ingredinte1, 5.5);
 	servicePrajituri.add(2, nume2, ingredinte2, 4.5);
-	servicePrajituri.add(1, nume3, ingredinte3, 5.5);
+	servicePrajituri.add(1, nume3, ingredinte3, 2.5);
 	assert(servicePrajituri.getSize() == 3);
 
 	assert(servicePrajituri.getAll()[0].getCode() == 3);
 	assert(servicePrajituri.getAll()[1].getCode() == 2);
 	assert(servicePrajituri.getAll()[2].getCode() == 1);
 
+	map<string, double> rez = servicePrajituri.showRecipe();
+	//ingrediente1 : multa and ciocolata
+	//ingrediente2 : cafeaPiscoturi
+	//ingrediente3 : blat and ciocolata
+	// function maps and gets rid of duplicates so we have multa,blat,cafeaPiscoturi,ciocolata
+	// the size of map should be 4 after the function
+	assert(rez.size() == 4);
+	map<string, double>::iterator it = rez.find("multa"); // appears once
+	assert(it->second == 5.5);
+	map<string, double>::iterator it2 = rez.find("ciocolata"); // appears twice
+	assert(it2->second == 4); // 5.5+2.5 / 2
+	map<string, double>::iterator it3 = rez.find("blat"); // appears once
+	assert(it3->second == 2.5); 
+	map<string, double>::iterator it4 = rez.find("cafeaPiscoturi"); // appears once
+	assert(it4->second == 4.5);
+
 	servicePrajituri.removeByCode(3);
-
 	assert(servicePrajituri.getAll()[1].getCode() == 1);
-
 	assert(servicePrajituri.getSize() == 2);
 
 }
